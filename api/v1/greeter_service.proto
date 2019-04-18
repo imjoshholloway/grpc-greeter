@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package imjoshholloway.greeter.v1;
+
+option go_package = "greeter";
+
+import "google/api/annotations.proto";
+
+// Greeter greets requesters
+service Greeter {
+rpc Greet(GreetRequest) returns (GreetResponse) {
+    option (google.api.http) = {
+      post: "/v1/greet"
+      body: "*"
+    };
+  }
+}
+
+message GreetRequest {
+  string greeting = 1;
+}
+
+message GreetResponse {
+  string message = 1;
+}

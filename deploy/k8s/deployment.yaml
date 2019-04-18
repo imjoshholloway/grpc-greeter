@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter
+  labels:
+    app: greeter
+spec:
+  selector:
+    app: greeter
+  ports:
+  - port: 8080
+    name: grpc-greeter
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: greeter
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: greeter
+    spec:
+      containers:
+      - name: helloworld
+        image: imjoshholloway/grpc-greeter:latest
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 8080

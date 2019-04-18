@@ -1,0 +1,32 @@
+excludes:
+  - ./vendor
+
+protoc:
+  version: 3.7.1
+  # Additional paths to include with -I to protoc.
+  # By default, the directory of the config file is included,
+  # or the current directory if there is no config file.
+  includes:
+    - ./vendor
+    - ./third_party/googleapis
+lint:
+  group: google
+create:
+  packages:
+    - directory: api
+      name: greeter
+generate:
+  go_options:
+    import_path: github.com/imjoshholloway/grpc-greeter
+
+  # The list of plugins.
+  plugins:
+    - name: go
+      flags: plugins=grpc
+      output: ./
+    
+    - name: descriptor_set
+      output: ./
+      file_suffix: proto-descriptor
+      include_imports: true
+      include_source_info: true
